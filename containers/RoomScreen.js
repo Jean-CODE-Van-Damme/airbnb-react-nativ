@@ -14,10 +14,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 // imports img / logos
 import { AntDesign } from "@expo/vector-icons";
 import logo from "../assets/logo-airbnb.png";
+// import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 // imports composants
 import CustomIcons from "../CustomIcons";
@@ -51,7 +53,7 @@ export default function RoomScreen() {
   }, [id]);
 
   console.log("DATA >>>", data);
-
+  // const pictureArray = data.photos;
   return (
     <View style={styles.room}>
       {isLoading ? (
@@ -79,6 +81,25 @@ export default function RoomScreen() {
                 source={{ uri: data?.photos?.[1].url ?? "" }}
                 style={styles.pictureApt}
               />
+              {/* <View style={styles.container}>
+                <SwiperFlatList
+                  autoplay
+                  autoplayDelay={2}
+                  index={0}
+                  autoplayLoop
+                  showPagination
+                  data={pictureArray}
+                  keyExtractor={(element, index) => index}
+                  renderItem={({ item }) => {
+                    return (
+                      <Image
+                        source={{ uri: item?.url ?? "" }}
+                        style={styles.pictureApt}
+                      />
+                    );
+                  }}
+                ></SwiperFlatList>
+              </View> */}
 
               <View style={styles.priceView}>
                 <Text style={styles.priceText}>{data.price} $</Text>
@@ -91,8 +112,10 @@ export default function RoomScreen() {
                   {data.title}
                 </Text>
                 <View style={styles.review}>
-                  <CustomIcons ratingValue={data?.ratingValue} /> 
-                  <Text style={styles.opacity}>{data.reviews} reviews</Text>
+                  <CustomIcons ratingValue={data?.ratingValue} />
+                  <Text style={{ opacity: 0.5, marginLeft: 10 }}>
+                    {data.reviews} reviews
+                  </Text>
                 </View>
               </View>
               <View style={styles.firstPartRight}>
