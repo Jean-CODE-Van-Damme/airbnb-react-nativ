@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  // Dimensions
 } from "react-native";
 
 // imports fonctionnalites
@@ -171,7 +172,7 @@ export default function RoomScreen() {
     </View>
   );
 }
-
+// const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   room: {
     flex: 1,
@@ -301,4 +302,10 @@ const styles = StyleSheet.create({
   icon: {
     marginLeft: 10,
   },
+
+  // Test Swiper
+
+  // container: { flex: 1, backgroundColor: 'white' },
+  // child: { width, justifyContent: 'center' },
+  // text: { fontSize: width * 0.5, textAlign: 'center' },
 });
