@@ -44,15 +44,13 @@ export default function HomeScreen() {
   // console.log("data >>>", data);
   return (
     <View style={styles.home}>
+      {/* {isLoading ?  : null} */}
       {isLoading ? (
         <ActivityIndicator
           size="large"
           color="purple"
           style={{ marginTop: 100 }}
         ></ActivityIndicator>
-      ) : null}
-      {isLoading ? (
-        <Text>Chargement</Text>
       ) : (
         <View style={{ width: "90%" }}>
           <View style={styles.logoVieW}>
@@ -103,17 +101,17 @@ export default function HomeScreen() {
                       </View>
                     </View>
                   </TouchableOpacity>
-                );                   
+                );
               }}
             />
           </View>
-
+          {/* 
           <Button
             title="Go to Profile"
             onPress={() => {
               navigation.navigate("Profile", { userId: 123 });
             }}
-          />
+          /> */}
         </View>
       )}
     </View>
@@ -229,10 +227,3 @@ const styles = StyleSheet.create({
     // backgroundColor: "blue",
   },
 });
-
-
-
-
- 
-
-            
