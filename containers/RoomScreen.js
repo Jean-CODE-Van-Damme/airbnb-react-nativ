@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
+import MapView from "react-native-maps";
 
 // imports img / logos
 import { AntDesign } from "@expo/vector-icons";
@@ -55,6 +56,10 @@ export default function RoomScreen() {
 
   console.log("DATA >>>", data);
   // const pictureArray = data.photos;
+  const latitude = data?.location?.[1];
+  const longitude = data?.location?.[0];
+  console.log("latitude >>>", latitude);
+  console.log("longitude >>>", longitude);
   return (
     <View style={styles.room}>
       {isLoading ? (
@@ -68,7 +73,7 @@ export default function RoomScreen() {
           <TouchableOpacity
             style={styles.arrowBack}
             onPress={() => {
-              navigation.navigate("Home");
+              navigation.goBack();
             }}
           >
             <AntDesign name="arrowleft" size={24} color="black" />
@@ -167,6 +172,22 @@ export default function RoomScreen() {
               </View>
             </View>
           </View>
+          <MapView
+            style={{ width: "100%", height: 500, marginTop: 30 }}
+            initialRegion={{
+              latitude: 48.856614,
+              longitude: 2.3522219,
+              latitudeDelta: 0.2,
+              longitudeDelta: 0.2,
+            }}
+          >
+            <MapView.Marker
+              coordinate={{
+                latitude: latitude,
+                longitude: longitude,
+              }}
+            ></MapView.Marker>
+          </MapView>
         </ScrollView>
       )}
     </View>

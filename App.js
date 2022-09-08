@@ -11,6 +11,8 @@ import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import SplashScreen from "./containers/SplashScreen";
 import RoomScreen from "./containers/RoomScreen";
+import AroundMe from "./containers/AroundMe";
+import { Foundation } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -109,17 +111,45 @@ export default function App() {
                         {() => <RoomScreen />}
                       </Stack.Screen>
 
-                      <Stack.Screen
+                      {/* <Stack.Screen
                         name="Profile"
                         options={{
                           title: "User Profile",
                         }}
                       >
                         {() => <ProfileScreen />}
+                      </Stack.Screen> */}
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+
+                <Tab.Screen
+                  name="tabAroundMe"
+                  options={{
+                    tabBarLabel: "AroundMe",
+                    tabBarIcon: ({ color, size }) => (
+                      <Foundation name="marker" size={size} color={color} />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="AroundMe"
+                        options={{
+                          headerShown: false,
+                          title: "Around Me",
+                          headerShown: false,
+                          headerStyle: { backgroundColor: "red" },
+                          headerTitleStyle: { color: "white" },
+                        }}
+                      >
+                        {() => <AroundMe />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+
                 <Tab.Screen
                   name="TabSettings"
                   options={{
