@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/core";
 
 // imports img / logos
 import logo from "../assets/logo-airbnb.png";
-import CustomIcons from "../CustomIcons";
+import CustomIcons from "../components/CustomIcons";
 
 export default function HomeScreen() {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,10 +53,6 @@ export default function HomeScreen() {
         ></ActivityIndicator>
       ) : (
         <View style={{ width: "90%" }}>
-          <View style={styles.logoVieW}>
-            <Image style={styles.logo} source={logo} />
-          </View>
-
           <View style={styles.offers}>
             <FlatList
               data={data}
@@ -124,20 +120,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
 
     // backgroundColor: "gold",
-  },
-
-  logoVieW: {
-    alignItems: "center",
-    marginTop: 30,
-    marginBottom: 20,
-    paddingBottom: 10,
-    borderBottomColor: "grey",
-    borderBottomWidth: 0.5,
-  },
-
-  logo: {
-    width: 40,
-    height: 40,
   },
 
   offers: {

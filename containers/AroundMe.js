@@ -9,8 +9,8 @@ import logo from "../assets/logo-airbnb.png";
 export default function AroundMe() {
   const [isAgree, setIsAgree] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [latitude, setLatititude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  // const [latitude, setLatititude] = useState("");
+  // const [longitude, setLongitude] = useState("");
   const [data, setData] = useState({});
   const [data2, setData2] = useState({});
 
@@ -24,8 +24,8 @@ export default function AroundMe() {
           let location = await Location.getCurrentPositionAsync();
           // console.log("lat >>>", location.coords.latitude);
           // console.log("long >>>", location.coords.longitude);
-          setLatititude(location.coords.latitude);
-          setLongitude(location.coords.longitude);
+          // setLatititude(location.coords.latitude);
+          // setLongitude(location.coords.longitude);
           setIsAgree(true);
 
           // console.log("stateLaltitude", latitude);
@@ -59,14 +59,10 @@ export default function AroundMe() {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={styles.logoView}>
-          <Image style={styles.logo} source={logo} />
-        </View>
-
         {isLoading ? (
           <Text>En attente de validation</Text>
         ) : !isAgree ? (
-          // <Text>Permission refusee</Text>
+          //utilisateur pas d accord
           <MapView
             provider={PROVIDER_GOOGLE}
             style={styles.mapWithPosition}
@@ -91,10 +87,8 @@ export default function AroundMe() {
             })}
           </MapView>
         ) : (
+          // utilisateur d accord
           <View>
-            {/* <Text>{latitude}</Text>
-          <Text>{longitude}</Text> */}
-
             <MapView
               showsUserLocation={true}
               provider={PROVIDER_GOOGLE}
@@ -141,21 +135,8 @@ const styles = StyleSheet.create({
   },
 
   mapWithPosition: {
-    height: 500,
+    height: 600,
     width: "100%",
-    marginTop: 20,
-  },
-
-  logoView: {
-    // backgroundColor: "gold",
-    height: 50,
-    marginTop: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  logo: {
-    width: 40,
-    height: 40,
+    // marginTop: 20,
   },
 });

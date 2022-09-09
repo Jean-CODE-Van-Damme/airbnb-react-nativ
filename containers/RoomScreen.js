@@ -24,7 +24,7 @@ import logo from "../assets/logo-airbnb.png";
 // import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 // imports composants
-import CustomIcons from "../CustomIcons";
+import CustomIcons from "../components/CustomIcons";
 
 export default function RoomScreen() {
   const [data, setData] = useState({});
@@ -70,17 +70,15 @@ export default function RoomScreen() {
         ></ActivityIndicator>
       ) : (
         <ScrollView>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.arrowBack}
             onPress={() => {
               navigation.goBack();
             }}
           >
             <AntDesign name="arrowleft" size={24} color="black" />
-          </TouchableOpacity>
-          <View style={styles.logoPart}>
-            <Image style={styles.logo} source={logo}></Image>
-          </View>
+          </TouchableOpacity> */}
+
           <View style={styles.topPart}>
             <View style={styles.picturePart}>
               <Image
@@ -200,21 +198,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 
-  logoPart: {
-    alignItems: "center",
-    // marginTop: 5,
-  },
-
-  logo: {
-    width: 40,
-    height: 40,
-  },
-
-  arrowBack: {
-    marginTop: 25,
-    marginLeft: 5,
-  },
-
   topPart: {
     width: "100%",
     height: 400,
@@ -225,7 +208,6 @@ const styles = StyleSheet.create({
     width: "100%",
     // backgroundColor: "pink",
     height: "50%",
-    marginTop: 5,
   },
 
   pictureApt: {

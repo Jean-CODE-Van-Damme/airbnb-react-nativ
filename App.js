@@ -1,9 +1,18 @@
+// imports react, react nativ
 import React, { useState, useEffect } from "react";
+
+// imports fonctionnalites
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+// imports img / logos
 import { Ionicons } from "@expo/vector-icons";
+import { Foundation } from "@expo/vector-icons";
+
+// imports composants
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
@@ -12,7 +21,8 @@ import SettingsScreen from "./containers/SettingsScreen";
 import SplashScreen from "./containers/SplashScreen";
 import RoomScreen from "./containers/RoomScreen";
 import AroundMe from "./containers/AroundMe";
-import { Foundation } from "@expo/vector-icons";
+import Logo from "./components/Logo";
+import ArrowLeft from "./components/ArrowLeft";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -86,13 +96,17 @@ export default function App() {
                   }}
                 >
                   {() => (
-                    <Stack.Navigator>
+                    <Stack.Navigator
+                      screenOptions={{
+                        headerTitle: () => <Logo />,
+                      }}
+                    >
                       <Stack.Screen
                         name="Home"
                         options={{
-                          title: "My App",
-                          headerShown: false,
-                          headerStyle: { backgroundColor: "red" },
+                          // title: "My App",
+                          // headerShown: false,
+                          headerStyle: { backgroundColor: "white" },
                           headerTitleStyle: { color: "white" },
                         }}
                       >
@@ -102,10 +116,9 @@ export default function App() {
                       <Stack.Screen
                         name="Room"
                         options={{
-                          title: "My Room",
-                          headerShown: false,
-                          headerStyle: { backgroundColor: "red" },
-                          headerTitleStyle: { color: "white" },
+                          // headerShown: false,
+                          headerLeft: () => <ArrowLeft />,
+                          // headerTitleStyle: { color: "white" },
                         }}
                       >
                         {() => <RoomScreen />}
@@ -137,11 +150,11 @@ export default function App() {
                       <Stack.Screen
                         name="AroundMe"
                         options={{
-                          headerShown: false,
-                          title: "Around Me",
-                          headerShown: false,
-                          headerStyle: { backgroundColor: "red" },
-                          headerTitleStyle: { color: "white" },
+                          // headerShown: false,
+                          // title: "Around Me",
+
+                          headerStyle: { backgroundColor: "white" },
+                          headerTitle: () => <Logo />,
                         }}
                       >
                         {() => <AroundMe />}
