@@ -88,12 +88,14 @@ export default function HomeScreen() {
                           </View>
                         </View>
 
-                        <Image
-                          style={styles.userPicture}
-                          source={{
-                            uri: item?.user?.account?.photo?.url ?? "",
-                          }}
-                        />
+                        <View style={styles.bottomPartRight}>
+                          <Image
+                            style={styles.userPicture}
+                            source={{
+                              uri: item?.user?.account?.photo?.url ?? "",
+                            }}
+                          />
+                        </View>
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -129,15 +131,12 @@ const styles = StyleSheet.create({
   },
 
   offer: {
-    width: "90%",
-    // padding: 20,
-    // marginLeft: 10,
+    width: "95%",
     borderBottomColor: "grey",
     borderBottomWidth: 0.5,
     marginBottom: 20,
-    marginLeft: 12,
+    marginLeft: 5,
     paddingBottom: 10,
-    // backgroundColor: "gold",
   },
 
   topPart: {
@@ -184,6 +183,13 @@ const styles = StyleSheet.create({
     width: "70%",
     height: 70,
     justifyContent: "space-between",
+  },
+
+  bottomPartRight: {
+    width: "30%",
+    height: 70,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   starAndReview: {

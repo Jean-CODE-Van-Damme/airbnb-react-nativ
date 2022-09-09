@@ -181,7 +181,7 @@ export default function App() {
                       <Stack.Screen
                         name="Settings"
                         options={{
-                          title: "Settings",
+                          headerTitle: () => <Logo />,
                         }}
                       >
                         {() => <SettingsScreen setToken={setToken} />}
