@@ -1,3 +1,10 @@
+// imports fonctionnalites
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/core";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+// imports react/reactnativ
 import { useState } from "react";
 import {
   Text,
@@ -8,12 +15,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import logo from "../assets/logo-airbnb.png";
-import { useNavigation } from "@react-navigation/core";
-import axios from "axios";
+
+//import logo
 import { Feather } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import logo from "../assets/logo-airbnb.png";
 
 export default function SignUpScreen({ setToken }) {
   const navigation = useNavigation();
@@ -47,6 +52,9 @@ export default function SignUpScreen({ setToken }) {
           console.log("response >>>", response.data);
           setToken(response.data.token);
           alert("Inscritpion successfull");
+
+          await AsyncStorage.setItem("userId", response.data.id);
+          console.log("id >>>", response.data.id);
         } catch (error) {
           console.log(error.response);
           if (error.response.data) {

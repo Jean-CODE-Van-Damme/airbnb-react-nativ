@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // imports img / logos
 import { Ionicons } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 // imports composants
 import HomeScreen from "./containers/HomeScreen";
@@ -164,22 +165,18 @@ export default function App() {
                 </Tab.Screen>
 
                 <Tab.Screen
-                  name="TabSettings"
+                  name="TabProfile"
                   options={{
-                    tabBarLabel: "Settings",
+                    tabBarLabel: "Profile",
                     tabBarIcon: ({ color, size }) => (
-                      <Ionicons
-                        name={"ios-options"}
-                        size={size}
-                        color={color}
-                      />
+                      <AntDesign name="user" size={size} color={color} />
                     ),
                   }}
                 >
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Settings"
+                        name="Profile"
                         options={{
                           headerTitle: () => <Logo />,
                         }}
