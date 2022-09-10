@@ -52,64 +52,55 @@ export default function HomeScreen() {
           style={{ marginTop: 100 }}
         ></ActivityIndicator>
       ) : (
-        <View style={{ width: "90%" }}>
-          <View style={styles.offers}>
-            <FlatList
-              data={data}
-              keyExtractor={(element) => element._id}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate("Room", { id: item._id });
-                    }}
-                  >
-                    <View style={styles.offer}>
-                      <View style={styles.topPart}>
-                        <Image
-                          source={{ uri: item?.photos?.[0].url ?? "" }}
-                          style={styles.aptPicture}
-                        />
-                        <View style={styles.priceWiew}>
-                          <Text style={styles.priceText}>{item.price} $</Text>
-                        </View>
-                      </View>
-                      <View style={styles.bottomPart}>
-                        <View style={styles.bottomPartLeft}>
-                          <Text style={styles.title} numberOfLines={1}>
-                            {item.title}
-                          </Text>
-                          <View style={styles.starAndReview}>
-                            <CustomIcons ratingValue={item.ratingValue} />
-
-                            <Text style={styles.opacity}>
-                              {item.reviews} reviews
-                            </Text>
-                          </View>
-                        </View>
-
-                        <View style={styles.bottomPartRight}>
-                          <Image
-                            style={styles.userPicture}
-                            source={{
-                              uri: item?.user?.account?.photo?.url ?? "",
-                            }}
-                          />
-                        </View>
+        <View style={styles.offers}>
+          <FlatList
+            data={data}
+            keyExtractor={(element) => element._id}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Room", { id: item._id });
+                  }}
+                >
+                  <View style={styles.offer}>
+                    <View style={styles.topPart}>
+                      <Image
+                        source={{ uri: item?.photos?.[0].url ?? "" }}
+                        style={styles.aptPicture}
+                      />
+                      <View style={styles.priceWiew}>
+                        <Text style={styles.priceText}>{item.price} $</Text>
                       </View>
                     </View>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </View>
-          {/* 
-          <Button
-            title="Go to Profile"
-            onPress={() => {
-              navigation.navigate("Profile", { userId: 123 });
+                    <View style={styles.bottomPart}>
+                      <View style={styles.bottomPartLeft}>
+                        <Text style={styles.title} numberOfLines={1}>
+                          {item.title}
+                        </Text>
+                        <View style={styles.starAndReview}>
+                          <CustomIcons ratingValue={item.ratingValue} />
+
+                          <Text style={styles.opacity}>
+                            {item.reviews} reviews
+                          </Text>
+                        </View>
+                      </View>
+
+                      <View style={styles.bottomPartRight}>
+                        <Image
+                          style={styles.userPicture}
+                          source={{
+                            uri: item?.user?.account?.photo?.url ?? "",
+                          }}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              );
             }}
-          /> */}
+          />
         </View>
       )}
     </View>
@@ -131,11 +122,11 @@ const styles = StyleSheet.create({
   },
 
   offer: {
-    width: "95%",
+    width: "100%",
     borderBottomColor: "grey",
     borderBottomWidth: 0.5,
     marginBottom: 20,
-    marginLeft: 5,
+
     paddingBottom: 10,
   },
 

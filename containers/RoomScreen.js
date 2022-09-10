@@ -173,8 +173,8 @@ export default function RoomScreen() {
           <MapView
             style={{ width: "100%", height: 500, marginTop: 30 }}
             initialRegion={{
-              latitude: 48.856614,
-              longitude: 2.3522219,
+              latitude: data.location[1],
+              longitude: data.location[0],
               latitudeDelta: 0.2,
               longitudeDelta: 0.2,
             }}

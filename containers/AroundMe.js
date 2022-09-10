@@ -1,46 +1,48 @@
-import { Text, View, Image, StyleSheet, ScrollView } from "react-native";
-import * as Location from "expo-location";
+// import react, react nativ
 import { useEffect, useState } from "react";
+import { Text, View, Image, StyleSheet, ScrollView } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { FontAwesome5 } from "@expo/vector-icons";
+
+// import fonctionnalites
+import * as Location from "expo-location";
 import axios from "axios";
-import logo from "../assets/logo-airbnb.png";
 
 export default function AroundMe() {
   const [isAgree, setIsAgree] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  // const [latitude, setLatititude] = useState("");
-  // const [longitude, setLongitude] = useState("");
+  const [latitude, setLatititude] = useState("");
+  const [longitude, setLongitude] = useState("");
   const [data, setData] = useState({});
   const [data2, setData2] = useState({});
 
   useEffect(() => {
     const askPermission = async () => {
       try {
+        // demander au user l autorisation pour la localisation
         let { status } = await Location.requestForegroundPermissionsAsync();
-        // console.log("status >>>", status);
-        // console.log("result", result);
+
+        // si il repond oui
         if (status === "granted") {
           let location = await Location.getCurrentPositionAsync();
           // console.log("lat >>>", location.coords.latitude);
           // console.log("long >>>", location.coords.longitude);
-          // setLatititude(location.coords.latitude);
-          // setLongitude(location.coords.longitude);
+          setLatititude(location.coords.latitude);
+          setLongitude(location.coords.longitude);
           setIsAgree(true);
 
-          // console.log("stateLaltitude", latitude);
-          // console.log("stateLongitude", longitude);
-
           // retourner les apts les plus proche et la localisation
+          // requete avec query
           const response = await axios.get(
             `https://express-airbnb-api.herokuapp.com/rooms/around?latitude=${location.coords.latitude}&longitude=${location.coords.longitude}`
           );
 
           setData(response.data);
           console.log("responseAPI >>>", response.data);
+          // si il repond non
         } else {
           setIsAgree(false);
 
+          // requete sans les query
           const response2 = await axios.get(
             `https://express-airbnb-api.herokuapp.com/rooms/around`
           );
@@ -94,8 +96,8 @@ export default function AroundMe() {
               provider={PROVIDER_GOOGLE}
               style={styles.mapWithPosition}
               initialRegion={{
-                latitude: 48.856614,
-                longitude: 2.3522219,
+                latitude: latitude,
+                longitude: longitude,
                 latitudeDelta: 0.2,
                 longitudeDelta: 0.2,
               }}
