@@ -3,12 +3,12 @@ import { Button, Text, View } from "react-native";
 export default function SettingsScreen({ setToken }) {
   return (
     <View>
-      <Button
+      {/* <Button
         title="Log Out"
         onPress={() => {
           setToken(null);
         }}
-      />
+      /> */}
     </View>
   );
 }

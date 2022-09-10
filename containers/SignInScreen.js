@@ -15,7 +15,7 @@ import axios from "axios";
 import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function SignInScreen({ setToken }) {
+export default function SignInScreen({ saveToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -34,10 +34,10 @@ export default function SignInScreen({ setToken }) {
         );
         console.log(response.data);
         console.log(response.data.token);
-        setToken(response.data.token);
+        saveToken(response.data.token, response.data.id);
         alert("Connexion Successfull");
 
-        await AsyncStorage.setItem("userId", response.data.id);
+        // await AsyncStorage.setItem("userId", response.data.id);
         console.log("id user Sign in", response.data.id);
       } catch (error) {
         console.log(error.response);

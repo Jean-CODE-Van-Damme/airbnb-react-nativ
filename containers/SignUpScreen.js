@@ -20,7 +20,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import logo from "../assets/logo-airbnb.png";
 
-export default function SignUpScreen({ setToken }) {
+export default function SignUpScreen({ saveToken }) {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState("");
@@ -49,11 +49,12 @@ export default function SignUpScreen({ setToken }) {
               password: password,
             }
           );
+
           console.log("response >>>", response.data);
-          setToken(response.data.token);
+          saveToken(response.data.token, response.data.id);
           alert("Inscritpion successfull");
 
-          await AsyncStorage.setItem("userId", response.data.id);
+          // await AsyncStorage.setItem("userId", response.data.id);
           console.log("id >>>", response.data.id);
         } catch (error) {
           console.log(error.response);

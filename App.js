@@ -31,15 +31,19 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null);
 
-  const setToken = async (token) => {
-    if (token) {
+  const saveToken = async (token, userId) => {
+    if (token && userId) {
       await AsyncStorage.setItem("userToken", token);
+      await AsyncStorage.setItem("userId", userId);
     } else {
       await AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userId");
     }
 
     setUserToken(token);
+    setUserId(userId);
   };
 
   useEffect(() => {
@@ -51,6 +55,7 @@ export default function App() {
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
       setUserToken(userToken);
+      setUserId(userId);
 
       setIsLoading(false);
     };
@@ -70,10 +75,10 @@ export default function App() {
           // No token found, user isn't signed in
           <>
             <Stack.Screen name="SignIn" options={{ headerShown: false }}>
-              {() => <SignInScreen setToken={setToken} />}
+              {() => <SignInScreen saveToken={saveToken} />}
             </Stack.Screen>
             <Stack.Screen name="SignUp" options={{ headerShown: false }}>
-              {() => <SignUpScreen setToken={setToken} />}
+              {() => <SignUpScreen saveToken={saveToken} />}
             </Stack.Screen>
           </>
         ) : (
@@ -181,7 +186,7 @@ export default function App() {
                           headerTitle: () => <Logo />,
                         }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => <ProfileScreen saveToken={saveToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
