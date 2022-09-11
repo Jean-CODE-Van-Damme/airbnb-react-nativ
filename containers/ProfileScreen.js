@@ -40,24 +40,24 @@ export default function ProfileScreen({ saveToken, userId, userToken }) {
       setIsLoading(false);
     };
     userProfile();
-
-    const updateProfile = async () => {
-      try {
-        const response2 = await axios.put(
-          "https://express-airbnb-api.herokuapp.com/user/update",
-          {
-            email: email,
-            description: description,
-            username: username,
-          },
-          { headers: { Authorization: ` Bearer ${userToken}` } }
-        );
-        console.log("responseUdpdate >>>", response2.data);
-      } catch (error) {
-        console.log(error.response2);
-      }
-    };
   }, []);
+
+  const updateProfile = async () => {
+    try {
+      const response2 = await axios.put(
+        "https://express-airbnb-api.herokuapp.com/user/update",
+        {
+          email: email,
+          description: description,
+          username: username,
+        },
+        { headers: { Authorization: ` Bearer ${userToken}` } }
+      );
+      console.log("responseUdpdate >>>", response2.data);
+    } catch (error) {
+      console.log("error >>>", error.response2);
+    }
+  };
 
   return (
     <View>
@@ -81,50 +81,53 @@ export default function ProfileScreen({ saveToken, userId, userToken }) {
               )}
             </View>
 
-            <View>
-              <TextInput
-                value={email}
-                onChangeText={(text) => {
-                  setEmail(text);
-                }}
-              ></TextInput>
+            <View style={styles.formPart}>
+              <View style={styles.section1}>
+                <TextInput
+                  style={styles.input1}
+                  value={email}
+                  onChangeText={(text) => {
+                    setEmail(text);
+                  }}
+                ></TextInput>
 
-              <TextInput
-                value={username}
-                onChangeText={(text) => {
-                  setUsername(text);
-                }}
-              ></TextInput>
-
-              <TextInput
-                value={description}
-                onChangeText={(text) => {
-                  setDescription(text);
-                }}
-              ></TextInput>
+                <TextInput
+                  style={styles.input1}
+                  value={username}
+                  onChangeText={(text) => {
+                    setUsername(text);
+                  }}
+                ></TextInput>
+              </View>
+              <View style={styles.section2}>
+                <TextInput
+                  value={description}
+                  onChangeText={(text) => {
+                    setDescription(text);
+                  }}
+                ></TextInput>
+              </View>
             </View>
 
-            <View>
+            <View style={styles.buttonPart}>
               <TouchableOpacity
-                // onPress={updateProfile}
-                style={styles.buttonUpdate}
+                onPress={updateProfile}
+                style={styles.buttonUp}
                 activeOpacity={0.8}
               >
-                <Text>UPDATE</Text>
+                <Text>Update</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={styles.buttonUpdate}
+                style={styles.buttonLog}
                 activeOpacity={0.8}
                 onPress={() => {
                   saveToken(null);
                 }}
               >
-                <Text>LOG OUT </Text>
+                <Text>Log out </Text>
               </TouchableOpacity>
             </View>
-
-            <Text>{username}</Text>
           </View>
         </ScrollView>
       )}
@@ -134,11 +137,11 @@ export default function ProfileScreen({ saveToken, userId, userToken }) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: "gold",
+    backgroundColor: "white",
   },
 
   photoPart: {
+    marginTop: 10,
     width: "100%",
     height: 200,
     justifyContent: "center",
@@ -149,10 +152,67 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 150,
+    borderColor: "#F9575C",
+    borderWidth: 1,
   },
 
-  buttonUpdate: {
-    borderColor: "black",
+  formPart: {
+    alignItems: "center",
+    width: "100%",
+    // backgroundColor: "green",
+    height: 200,
+  },
+
+  section1: {
+    justifyContent: "space-between",
+    width: "80%",
+    height: 80,
+    // backgroundColor: "yellow",
+  },
+
+  input1: {
+    paddingBottom: 5,
+    borderBottomColor: "#F9575C",
+    borderBottomWidth: 1,
+  },
+
+  section2: {
+    marginTop: 30,
+    width: "80%",
+    height: 120,
+    // backgroundColor: "blue",
+    borderColor: "#F9575C",
+    borderWidth: 1,
+    padding: 5,
+  },
+
+  buttonPart: {
+    marginTop: 30,
+    Width: "100%",
+    height: 140,
+    // backgroundColor: "blue",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+
+  buttonUp: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "50%",
+    height: 40,
+    borderColor: "#F9575C",
     borderWidth: 2,
+    borderRadius: 20,
+  },
+
+  buttonLog: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "50%",
+    height: 40,
+    borderColor: "#F9575C",
+    borderWidth: 2,
+    borderRadius: 20,
+    backgroundColor: "#E7E7E7",
   },
 });
