@@ -1,29 +1,26 @@
-// imports react, react nativ
+// imports React, React Nativ
 import React, { useState, useEffect } from "react";
 
-// imports fonctionnalites
+// imports Packages
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-// imports img / logos
+// imports pictures / logos
 import { Ionicons } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import Logo from "./components/Logo";
 
 // imports composants
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
-import SettingsScreen from "./containers/SettingsScreen";
-import SplashScreen from "./containers/SplashScreen";
+import ArrowLeft from "./components/ArrowLeft";
 import RoomScreen from "./containers/RoomScreen";
 import AroundMe from "./containers/AroundMe";
-import Logo from "./components/Logo";
-import ArrowLeft from "./components/ArrowLeft";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -33,6 +30,7 @@ export default function App() {
   const [userToken, setUserToken] = useState(null);
   const [userId, setUserId] = useState(null);
 
+  // fonction pour recup token, et id du user et save dans l AsyncStorage
   const saveToken = async (token, id) => {
     if (token && id) {
       await AsyncStorage.setItem("userToken", token);
@@ -47,14 +45,10 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Fetch the token from storage then navigate to our appropriate place
+    // Recu token depuis le Storage ,puis Nav
     const bootstrapAsync = async () => {
-      // We should also handle error for production apps
       const userToken = await AsyncStorage.getItem("userToken");
       const userId = await AsyncStorage.getItem("userId");
-
-      // This will switch to the App screen or Auth screen and this loading
-      // screen will be unmounted and thrown away.
       setUserToken(userToken);
       setUserId(userId);
 
@@ -65,15 +59,15 @@ export default function App() {
   }, []);
 
   if (isLoading === true) {
-    // We haven't finished checking for the token yet
     return null;
   }
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        {/* Si il n y a pas de token   */}
         {userToken === null ? (
-          // No token found, user isn't signed in
+          // Ecran de Sign-up et Sign-in
           <>
             <Stack.Screen name="SignIn" options={{ headerShown: false }}>
               {() => <SignInScreen saveToken={saveToken} />}
@@ -83,7 +77,8 @@ export default function App() {
             </Stack.Screen>
           </>
         ) : (
-          // User is signed in ! 🎉
+          // Sil il y a un token et donc que le user est co
+          // Application
           <Stack.Screen name="Tab" options={{ headerShown: false }}>
             {() => (
               <Tab.Navigator
@@ -123,22 +118,11 @@ export default function App() {
                       <Stack.Screen
                         name="Room"
                         options={{
-                          // headerShown: false,
                           headerLeft: () => <ArrowLeft />,
-                          // headerTitleStyle: { color: "white" },
                         }}
                       >
                         {() => <RoomScreen />}
                       </Stack.Screen>
-
-                      {/* <Stack.Screen
-                        name="Profile"
-                        options={{
-                          title: "User Profile",
-                        }}
-                      >
-                        {() => <ProfileScreen />}
-                      </Stack.Screen> */}
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
@@ -157,9 +141,6 @@ export default function App() {
                       <Stack.Screen
                         name="AroundMe"
                         options={{
-                          // headerShown: false,
-                          // title: "Around Me",
-
                           headerStyle: { backgroundColor: "white" },
                           headerTitle: () => <Logo />,
                         }}

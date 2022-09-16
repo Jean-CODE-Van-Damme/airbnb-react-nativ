@@ -1,9 +1,9 @@
-// import react, react nativ
+// import React, React Nativ
 import { useEffect, useState } from "react";
-import { Text, View, Image, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
-// import fonctionnalites
+// import Packages
 import * as Location from "expo-location";
 import axios from "axios";
 
@@ -21,34 +21,30 @@ export default function AroundMe() {
         // demander au user l autorisation pour la localisation
         let { status } = await Location.requestForegroundPermissionsAsync();
 
-        // si il repond oui
+        // si le user repond oui
         if (status === "granted") {
           let location = await Location.getCurrentPositionAsync();
-          // console.log("lat >>>", location.coords.latitude);
-          // console.log("long >>>", location.coords.longitude);
           setLatititude(location.coords.latitude);
           setLongitude(location.coords.longitude);
           setIsAgree(true);
 
-          // retourner les apts les plus proche et la localisation
-          // requete avec query
+          // retourner les flats les plus proches et la localisation du user
+
           const response = await axios.get(
             `https://express-airbnb-api.herokuapp.com/rooms/around?latitude=${location.coords.latitude}&longitude=${location.coords.longitude}`
           );
 
           setData(response.data);
           console.log("responseAPI >>>", response.data);
-          // si il repond non
+          // si ile user repond non
         } else {
           setIsAgree(false);
 
-          // requete sans les query
+          // retourner les flats de l"API sans localisation du user
           const response2 = await axios.get(
             `https://express-airbnb-api.herokuapp.com/rooms/around`
           );
           setData2(response2.data);
-
-          // retourner tous les apt sans la localisation
         }
       } catch (error) {
         console.log("ERROR", error.response);
@@ -61,10 +57,11 @@ export default function AroundMe() {
   return (
     <View style={styles.container}>
       <ScrollView>
+        {/* Attente validation user */}
         {isLoading ? (
           <Text>En attente de validation</Text>
         ) : !isAgree ? (
-          //utilisateur pas d accord
+          //user pas d accord
           <MapView
             provider={PROVIDER_GOOGLE}
             style={styles.mapWithPosition}
@@ -92,10 +89,12 @@ export default function AroundMe() {
           // utilisateur d accord
           <View>
             <MapView
+              // localisation du user co affichee
               showsUserLocation={true}
               provider={PROVIDER_GOOGLE}
               style={styles.mapWithPosition}
               initialRegion={{
+                // latitude et longitude du duser co
                 latitude: latitude,
                 longitude: longitude,
                 latitudeDelta: 0.2,
@@ -122,16 +121,15 @@ export default function AroundMe() {
   );
 }
 
+// Partie Style :
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: "center",
     justifyContent: "center",
   },
 
   title: {
     marginTop: 30,
-    // textAlign: "center",
     color: "#F49EA2",
     fontWeight: "bold",
   },
@@ -139,6 +137,5 @@ const styles = StyleSheet.create({
   mapWithPosition: {
     height: 600,
     width: "100%",
-    // marginTop: 20,
   },
 });

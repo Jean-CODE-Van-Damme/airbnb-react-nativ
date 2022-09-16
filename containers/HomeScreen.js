@@ -1,4 +1,4 @@
-// imports react nativ
+// imports React / React Nativ
 import {
   Button,
   Text,
@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-// imports fonctionnalites
+// imports Packages
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/core";
@@ -27,24 +27,21 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // requete Api pour retourner les offres
         const response = await axios.get(
           "https://express-airbnb-api.herokuapp.com/rooms"
         );
         setData(response.data);
-        // console.log("responseDataHome >>>", response.data);
       } catch (error) {
         console.log(error.response);
-        // console.log(error.response.data?.error);
       }
       setIsLoading(false);
     };
     fetchData();
   }, []);
 
-  // console.log("data >>>", data);
   return (
     <View style={styles.home}>
-      {/* {isLoading ?  : null} */}
       {isLoading ? (
         <ActivityIndicator
           size="large"
@@ -53,6 +50,7 @@ export default function HomeScreen() {
         ></ActivityIndicator>
       ) : (
         <View style={styles.offers}>
+          {/* Flat sur la reponse de l Api pour afficher les offres */}
           <FlatList
             data={data}
             keyExtractor={(element) => element._id}
@@ -60,6 +58,7 @@ export default function HomeScreen() {
               return (
                 <TouchableOpacity
                   onPress={() => {
+                    // nav vers l ecran Room , avec transmition de l id du user en params
                     navigation.navigate("Room", { id: item._id });
                   }}
                 >
@@ -107,6 +106,7 @@ export default function HomeScreen() {
   );
 }
 
+// Partie Style
 const styles = StyleSheet.create({
   home: {
     flex: 1,

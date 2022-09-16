@@ -1,9 +1,3 @@
-// imports fonctionnalites
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/core";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
 // imports react/reactnativ
 import { useState } from "react";
 import {
@@ -15,6 +9,12 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
+
+// imports Packages
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/core";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 //import logo
 import { Feather } from "@expo/vector-icons";
@@ -40,6 +40,8 @@ export default function SignUpScreen({ saveToken }) {
           console.log("requete >>>", "requete is started");
           setErrorMessage("");
           setIsLoading(true);
+
+          // requete api pour transmition mail/username/description/password
           const response = await axios.post(
             "https://express-airbnb-api.herokuapp.com/user/sign_up",
             {
@@ -50,12 +52,9 @@ export default function SignUpScreen({ saveToken }) {
             }
           );
 
-          console.log("response >>>", response.data);
+          // transmition token et id du user a App.Js par fonction saveToken
           saveToken(response.data.token, response.data.id);
           alert("Inscritpion successfull");
-
-          // await AsyncStorage.setItem("userId", response.data.id);
-          console.log("id >>>", response.data.id);
         } catch (error) {
           console.log(error.response);
           if (error.response.data) {
@@ -74,6 +73,7 @@ export default function SignUpScreen({ saveToken }) {
   return (
     <KeyboardAwareScrollView style={styles.container}>
       {isLoading ? (
+        // chargement
         <ActivityIndicator
           size="large"
           color="purple"
@@ -81,6 +81,7 @@ export default function SignUpScreen({ saveToken }) {
         ></ActivityIndicator>
       ) : null}
 
+      {/* fin du chargement */}
       <View style={styles.section1}>
         <Image source={logo} style={styles.logo}></Image>
         <Text style={styles.title}>Sign up</Text>
@@ -122,6 +123,7 @@ export default function SignUpScreen({ saveToken }) {
           </View>
 
           <View style={styles.section4}>
+            {/* Affichage ou non du mdp et de l icone eye selon state isSecureEntry  */}
             <View style={styles.password}>
               {isSecureEntry ? (
                 <Feather
@@ -153,6 +155,7 @@ export default function SignUpScreen({ saveToken }) {
               />
             </View>
 
+            {/* Affichage ou non du mdp de confirmation et de l icone eye selon state isSecureEntryConfirm  */}
             <View style={styles.password}>
               {isSecureEntryConfirm ? (
                 <Feather
@@ -192,9 +195,6 @@ export default function SignUpScreen({ saveToken }) {
               activeOpacity={0.8}
               title="Sign up"
               onPress={() => fetchData()}
-
-              // const userToken = "secret-token";
-              // setToken(userToken);
             >
               <Text>Sign up</Text>
             </TouchableOpacity>

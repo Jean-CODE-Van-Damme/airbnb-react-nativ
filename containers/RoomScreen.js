@@ -1,4 +1,4 @@
-// imports react nativ
+// imports React  et React Nativ
 import {
   Text,
   View,
@@ -7,21 +7,18 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  // Dimensions
 } from "react-native";
 
-// imports fonctionnalites
+// imports Packages
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
-import { SwiperFlatList } from "react-native-swiper-flatlist";
 import MapView from "react-native-maps";
 
-// imports img / logos
+// imports pictures / logos
 import { AntDesign } from "@expo/vector-icons";
 import logo from "../assets/logo-airbnb.png";
-// import { SwiperFlatList } from "react-native-swiper-flatlist";
 
 // imports composants
 import CustomIcons from "../components/CustomIcons";
@@ -33,19 +30,18 @@ export default function RoomScreen() {
   const route = useRoute();
   const navigation = useNavigation();
 
+  // recuperation de l id de l offre selectionnee avec route.params
   console.log("id >>>", route.params.id);
   const { id } = route.params;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // requete API pour retourner les info de l offre selectionee
         const response = await axios.get(
           `https://express-airbnb-api.herokuapp.com/rooms/${id}`
         );
         setData(response.data);
-        // console.log("roomAnswerData >>>", response.data);
-        console.log("url >>>", response.data.photos[0].url);
-        console.log("urlUser >>>", response.data.user.account.photo.url);
       } catch (error) {
         console.log(error.response);
       }
@@ -54,12 +50,9 @@ export default function RoomScreen() {
     fetchData();
   }, [id]);
 
-  console.log("DATA >>>", data);
-  // const pictureArray = data.photos;
   const latitude = data?.location?.[1];
   const longitude = data?.location?.[0];
-  console.log("latitude >>>", latitude);
-  console.log("longitude >>>", longitude);
+
   return (
     <View style={styles.room}>
       {isLoading ? (
@@ -70,40 +63,12 @@ export default function RoomScreen() {
         ></ActivityIndicator>
       ) : (
         <ScrollView>
-          {/* <TouchableOpacity
-            style={styles.arrowBack}
-            onPress={() => {
-              navigation.goBack();
-            }}
-          >
-            <AntDesign name="arrowleft" size={24} color="black" />
-          </TouchableOpacity> */}
-
           <View style={styles.topPart}>
             <View style={styles.picturePart}>
               <Image
                 source={{ uri: data?.photos?.[1].url ?? "" }}
                 style={styles.pictureApt}
               />
-              {/* <View style={styles.container}>
-                <SwiperFlatList
-                  autoplay
-                  autoplayDelay={2}
-                  index={0}
-                  autoplayLoop
-                  showPagination
-                  data={pictureArray}
-                  keyExtractor={(element, index) => index}
-                  renderItem={({ item }) => {
-                    return (
-                      <Image
-                        source={{ uri: item?.url ?? "" }}
-                        style={styles.pictureApt}
-                      />
-                    );
-                  }}
-                ></SwiperFlatList>
-              </View> */}
 
               <View style={styles.priceView}>
                 <Text style={styles.priceText}>{data.price} $</Text>
@@ -131,6 +96,7 @@ export default function RoomScreen() {
             </View>
 
             <View
+              // afficher le texte complet ou non selon l etat du state Show
               style={
                 !show
                   ? styles.descriptionPartHidden
@@ -145,6 +111,7 @@ export default function RoomScreen() {
                   }}
                   style={styles.button}
                 >
+                  {/* Modificaiton du logo selon l etat du state show */}
                   {!show ? (
                     <View style={{ flexDirection: "row" }}>
                       <Text style={styles.opacity}>Show more</Text>
@@ -170,6 +137,7 @@ export default function RoomScreen() {
               </View>
             </View>
           </View>
+          {/* Afficher la map avec un marker sur la localisation de l offre selectionnee */}
           <MapView
             style={{ width: "100%", height: 500, marginTop: 30 }}
             initialRegion={{
@@ -191,7 +159,8 @@ export default function RoomScreen() {
     </View>
   );
 }
-// const { width } = Dimensions.get('window');
+
+// Partie Style
 const styles = StyleSheet.create({
   room: {
     flex: 1,
@@ -201,12 +170,11 @@ const styles = StyleSheet.create({
   topPart: {
     width: "100%",
     height: 400,
-    // backgroundColor: "blue",
   },
 
   picturePart: {
     width: "100%",
-    // backgroundColor: "pink",
+
     height: "50%",
   },
 
@@ -240,8 +208,6 @@ const styles = StyleSheet.create({
   firstPartLeft: {
     justifyContent: "space-between",
     width: "70%",
-
-    // backgroundColor: "grey",
     padding: 10,
   },
 
@@ -249,7 +215,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     width: "30%",
     height: 90,
-    // backgroundColor: "green",
   },
 
   pictureUser: {
@@ -263,7 +228,6 @@ const styles = StyleSheet.create({
   review: {
     flexDirection: "row",
     alignItems: "center",
-    // backgroundColor: "gold",
     marginTop: 10,
   },
   star: {
@@ -273,13 +237,11 @@ const styles = StyleSheet.create({
   descriptionPartShow: {
     padding: 10,
     height: "35%",
-    // backgroundColor: "pink",
   },
 
   descriptionPartHidden: {
     padding: 10,
     height: "20%",
-    // backgroundColor: "white",
   },
 
   opacity: {
@@ -305,10 +267,4 @@ const styles = StyleSheet.create({
   icon: {
     marginLeft: 10,
   },
-
-  // Test Swiper
-
-  // container: { flex: 1, backgroundColor: 'white' },
-  // child: { width, justifyContent: 'center' },
-  // text: { fontSize: width * 0.5, textAlign: 'center' },
 });

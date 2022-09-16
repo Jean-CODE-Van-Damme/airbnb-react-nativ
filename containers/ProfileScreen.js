@@ -1,7 +1,6 @@
 import {
   Text,
   View,
-  Button,
   ActivityIndicator,
   Image,
   StyleSheet,
@@ -15,7 +14,6 @@ import logo from "../assets/logo-juve.jpeg";
 import { useState, useEffect } from "react";
 
 export default function ProfileScreen({ saveToken, userId, userToken }) {
-  // console.log("userIdInPS >>>", userId);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
   const [email, setEmail] = useState("");
@@ -25,6 +23,7 @@ export default function ProfileScreen({ saveToken, userId, userToken }) {
   useEffect(() => {
     const userProfile = async () => {
       try {
+        // requete API pour retourner les infos du user co
         const response = await axios.get(
           `https://express-airbnb-api.herokuapp.com/user/${userId}`,
           { headers: { Authorization: ` Bearer ${userToken}` } }
@@ -44,6 +43,7 @@ export default function ProfileScreen({ saveToken, userId, userToken }) {
 
   const updateProfile = async () => {
     try {
+      // requete API pour envoyer les modification a l API
       const response2 = await axios.put(
         "https://express-airbnb-api.herokuapp.com/user/update",
         {
@@ -74,6 +74,7 @@ export default function ProfileScreen({ saveToken, userId, userToken }) {
               {data.photo ? (
                 <Image
                   style={styles.userPhoto}
+                  // ATTENTION AU CHEMIN IL Y A UNE CLEF SUP
                   source={{ uri: data.photo }}
                 ></Image>
               ) : (
@@ -135,6 +136,7 @@ export default function ProfileScreen({ saveToken, userId, userToken }) {
   );
 }
 
+// PARTIE STYLE
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",

@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/core";
+// Import React React Native
 import {
   Text,
   TextInput,
@@ -8,12 +8,16 @@ import {
   Image,
   ActivityIndicator,
 } from "react-native";
+
 import { useState } from "react";
-import logo from "../assets/logo-airbnb.png";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+// Imports packages
+import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+// Imports picture/logo
+import logo from "../assets/logo-airbnb.png";
 import { Feather } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignInScreen({ saveToken }) {
   const [email, setEmail] = useState("");
@@ -28,17 +32,15 @@ export default function SignInScreen({ saveToken }) {
       try {
         setErrorMessage("");
         setIsLoading(true);
+        // requete Apti pour envoyer email et password
         const response = await axios.post(
           "https://express-airbnb-api.herokuapp.com/user/log_in",
           { email: email, password: password }
         );
-        console.log(response.data);
-        console.log(response.data.token);
+
+        // transmettre le token et l id du user dans App.js
         saveToken(response.data.token, response.data.id);
         alert("Connexion Successfull");
-
-        // await AsyncStorage.setItem("userId", response.data.id);
-        console.log("id user Sign in", response.data.id);
       } catch (error) {
         console.log(error.response);
         if (error.response.data) {
@@ -54,6 +56,7 @@ export default function SignInScreen({ saveToken }) {
 
   return (
     <KeyboardAwareScrollView style={styles.keyboard}>
+      {/* Chargement */}
       {isLoading && (
         <ActivityIndicator
           size="large"
@@ -61,7 +64,7 @@ export default function SignInScreen({ saveToken }) {
           style={{ marginTop: 100 }}
         ></ActivityIndicator>
       )}
-
+      {/* Fin du chargement */}
       <View>
         <View>
           <View style={styles.section1}>
@@ -78,6 +81,7 @@ export default function SignInScreen({ saveToken }) {
                 setEmail(text);
               }}
             />
+            {/* Afficher ou pas le password et le logo eye selon le state isSecureEntry */}
             <View style={styles.password}>
               {isSecureEntry ? (
                 <Feather
@@ -115,12 +119,14 @@ export default function SignInScreen({ saveToken }) {
             <TouchableOpacity
               style={styles.btn}
               title="Sign in"
+              // Appel de la fonction Fecthdata
               onPress={fetchData}
             >
               <Text>Sign in</Text>
             </TouchableOpacity>
           </View>
 
+          {/* Navigaiton vers Sign-up si l user n a pas encore de compte cree */}
           <View style={styles.section4}>
             <TouchableOpacity
               onPress={() => {
@@ -136,15 +142,14 @@ export default function SignInScreen({ saveToken }) {
   );
 }
 
+// Partie Style
 const styles = StyleSheet.create({
   keyboard: {
     flex: 1,
-    // backgroundColor: "gold",
   },
 
   section1: {
     flex: 1,
-    // backgroundColor: "blue",
     height: 200,
     alignItems: "center",
     justifyContent: "space-between",
