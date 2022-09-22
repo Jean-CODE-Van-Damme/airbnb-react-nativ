@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     // backgroundColor: "grey",
+    padding: 10,
   },
 
   offer: {
@@ -157,7 +158,8 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 14,
+    marginTop: 5,
+    fontSize: 16,
     fontWeight: "bold",
   },
 

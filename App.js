@@ -100,6 +100,7 @@ export default function App() {
                   {() => (
                     <Stack.Navigator
                       screenOptions={{
+                        headerTitleAlign: "center",
                         headerTitle: () => <Logo />,
                       }}
                     >
@@ -142,6 +143,8 @@ export default function App() {
                         name="AroundMe"
                         options={{
                           headerStyle: { backgroundColor: "white" },
+                          headerTitleAlign: "center",
+
                           headerTitle: () => <Logo />,
                         }}
                       >
@@ -165,6 +168,7 @@ export default function App() {
                       <Stack.Screen
                         name="Profile"
                         options={{
+                          headerTitleAlign: "center",
                           headerTitle: () => <Logo />,
                         }}
                       >
